@@ -39,15 +39,16 @@
                 <input type="text" id="usernameTextbox" autocomplete="off" class="iconInputTextbox" placeholder="USER">
             </div>
         </div>
-
+		<!-- File input for sharing files -->
+		<div class="iconInputContainer standardControl">
+			<div class="inputIcon">📁 </div>
+			<input type="file" id="imageInput" class="iconInputTextbox" onchange="selectImagefile()" />
+		</div>
         <div id="messageBar">
 			<!-- Textarea for text messages -->
 			<textarea id="messageBox" class="standardControl"
 				onkeydown="inputReturnHit()"
 				placeholder="Type your message... &#10Shift + Return for newline"></textarea>
-		
-			<!-- File input for image attachment -->
-			<input type="file" id="imageInput" class="standardControl" onchange="selectImagefile()">
 
 			<button id="sendButton" type="button" class="standardControl" onclick="sendMessage()">SEND</button>
 		</div>

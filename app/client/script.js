@@ -12,14 +12,7 @@ window.onbeforeunload = function() {
 	ws.close();
 };
 
-function generateRandomKey(length) {
-    var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    var key = "";
-    for (var i = 0; i < length; i++) {
-        key += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return key;
-}
+
 
 function sendMessage() {
     /* Grab values */
@@ -102,9 +95,6 @@ function decryptMessage(message, key) {
 	return decrypted;
 }
 
-ws.onmessage = function (event) {
-    recMessage(event.data);
-};
 
 function recMessage(message) {
     /* Update raw data box */
