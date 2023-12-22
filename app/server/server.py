@@ -28,7 +28,7 @@ async def test(websocket, path):
             break
 
 startServer = websockets.serve(
-    test, "0.0.0.0", 8763
+    test, "0.0.0.0", 8763, max_size=2**30
 )
 
 asyncio.get_event_loop().run_until_complete(startServer)
