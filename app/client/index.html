@@ -41,9 +41,11 @@
         </div>
 		<!-- File input for sharing files -->
 		<div class="iconInputContainer standardControl">
-			<div class="inputIcon">📁 </div>
-			<input type="file" id="imageInput" class="iconInputTextbox" onchange="selectImagefile()" />
+			<div class="inputIcon">🖼️ </div>
+			<input type="file" id="imageInput" style="display: none;" accept="image/*">
+			<button type="button" class="iconInputTextbox" onclick="document.getElementById('imageInput').click()">Select Image</button>
 		</div>
+		
         <div id="messageBar">
 			<!-- Textarea for text messages -->
 			<textarea id="messageBox" class="standardControl"

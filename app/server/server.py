@@ -3,7 +3,6 @@ import asyncio
 import websockets
 
 users = set()
-messages = []
 
 async def addUser(websocket):
     users.add(websocket)
@@ -15,18 +14,11 @@ async def removeUser(websocket):
 
 async def broadcast(message):
     print(message)
-    messages.append(message)  # Store the message on the server
     for user in users:
         await user.send(message)
 
-async def sendStoredMessages(websocket):
-    for message in messages:
-        await websocket.send(message)
-
 async def test(websocket, path):
     await addUser(websocket)
-    await sendStoredMessages(websocket)  # Send stored messages to the new user
-
     while True:
         try:
             message = await websocket.recv()
