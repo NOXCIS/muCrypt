@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 import asyncio
 import websockets
-import ssl
 
 users = set()
-sslContext = ssl.SSLContext(ssl.PROTOCOL_TLS)
-cert = "/path/to/ssl/cert.pem"
-privKey = "/path/to/privkey.pem"
-sslContext.load_cert_chain(cert, privKey)
+messages = []
 
 async def addUser(websocket):
     users.add(websocket)
@@ -19,23 +15,29 @@ async def removeUser(websocket):
 
 async def broadcast(message):
     print(message)
+    messages.append(message)  # Store the message on the server
     for user in users:
         await user.send(message)
 
+async def sendStoredMessages(websocket):
+    for message in messages:
+        await websocket.send(message)
+
 async def test(websocket, path):
     await addUser(websocket)
+    await sendStoredMessages(websocket)  # Send stored messages to the new user
+
     while True:
         try:
             message = await websocket.recv()
             await broadcast(message)
-        except:
+        except websockets.exceptions.ConnectionClosed:
             await removeUser(websocket)
-            websocket.close()
             break
 
 startServer = websockets.serve(
-            test, "0.0.0.0", 8765, ssl=sslContext
-            )
+    test, "0.0.0.0", 8763
+)
 
 asyncio.get_event_loop().run_until_complete(startServer)
 asyncio.get_event_loop().run_forever()

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <title>μCrypt (beta)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"
+        integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body style="">
+    <h1 id="logo">μCrypt🔐 <sup><i style="font-weight: lighter">(beta)</i></sup></h1>
+    <div id="rawDataBox">RAW MSG:
+        <div id="rawData"></div>
+    </div>
+
+    <div id="recMessageBox">
+        <ul id="messages"></ul>
+        <!-- Image container inside message box -->
+        <div id="imageContainer" style="display: none;">
+            <img id="receivedImage" alt="Received Image">
+        </div>
+    </div>
+
+    <form id="inputBar">
+        <div id="settingsBar">
+            <div class="iconInputContainer standardControl">
+                <div class="inputIcon">🔑 </div>
+                <input type="password" id="keyTextbox" autocomplete="off" class="iconInputTextbox" placeholder="KEY">
+            </div>
+
+            <div class="iconInputContainer standardControl">
+                <div class="inputIcon">👤 </div>
+                <input type="text" id="usernameTextbox" autocomplete="off" class="iconInputTextbox" placeholder="USER">
+            </div>
+        </div>
+
+        <div id="messageBar">
+			<!-- Textarea for text messages -->
+			<textarea id="messageBox" class="standardControl"
+				onkeydown="inputReturnHit()"
+				placeholder="Type your message... &#10Shift + Return for newline"></textarea>
+		
+			<!-- File input for image attachment -->
+			<input type="file" id="imageInput" class="standardControl" onchange="selectImagefile()">
+
+			<button id="sendButton" type="button" class="standardControl" onclick="sendMessage()">SEND</button>
+		</div>
+		
+    </form>
+
+
+	<script>
+    // Function to generate a random key
+    function generateKey(length) {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let key = '';
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            key += characters.charAt(randomIndex);
+        }
+        return key;
+    }
+
+    // Function to update the keyTextbox with a new key
+    function updateKey() {
+        // Get the keyTextbox element
+        const keyTextbox = document.getElementById('keyTextbox');
+
+        // Generate a new 4200-character long key
+        const generatedKey = generateKey(4200);
+
+        // Set the generated key as the value of keyTextbox
+        keyTextbox.value = generatedKey;
+    }
+
+    // Update the key every 15 seconds
+    setInterval(updateKey, 15000);
+
+    // Initial key generation
+    updateKey();
+</script>
+
+</body>
+
+</html>
